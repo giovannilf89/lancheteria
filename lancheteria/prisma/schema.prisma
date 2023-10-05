@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  nome      String
+  email     String
+  senha     String
+  create_at DateTime? @default(now())
+  update_at DateTime? @default(now())
+
+  @@map("usuarios")
+}
+
+model Client {
+  id          String    @id @default(uuid())
+  nome        String
+  cpf_cnpj    String
+  rg_ie       String
+  celular     String
+  fixo        String
+  rua         String
+  complemento String
+  bairro      String
+  cidade      String
+  estado      String
+  create_at   DateTime? @default(now())
+  update_at   DateTime? @default(now())
+
+  @@map("clientes")
+}
+
+model Produtos {
+  id         String    @id @default(uuid())
+  nome       String
+  fabricante String
+  quantidade String
+  banner     String
+  preco      String
+  create_at  DateTime? @default(now())
+  update_at  DateTime? @default(now())
+
+  categorias  Categorias @relation(fields: [categoriaId], references: [id]) //isso aqui indica que um produto faz parte de uma categoria, cria uma nova coluna (a categoriaId) e a referencia com o id de Categorias (o modelo e a tabela respectiva) 1- nome base de dados 2- modelo
+  categoriaId String
+
+  @@map("produtos")
+}
+
+model Categorias {
+  id        String    @id @default(uuid())
+  nome      String
+  create_at DateTime? @default(now())
+  update_at DateTime? @default(now())
+
+  produtos Produtos[] //isso aqui indica que uma categoria tem muitos produtos
+
+  @@map("categorias")
+}

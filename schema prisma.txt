@@ -1,0 +1,38 @@
+schema.prisma
+
+model -> Nome do modelo (consultas e ligações com tabela no db, primeira letra maiscula)
+
+
+
+@@map("Nome") (nome da tabela do db) 
+
+após usar o comando para migrar a tabela
+npx prisma migrate dev
+
+____________________
+criar service
+
+importar prismaClient (biblioteca de conexao com o banco de dados, manipula os dados)
+
+criar interface (tipificação dos dados)
+
+interface nome{
+nome : string
+email: string
+}
+
+criar a classe
+
+async execute({nome, email}: interface){ (recebe info do front end)
+
+_____________________
+criar controlador
+
+importar serviço 
+importar request e response express (middlewares)
+
+criar classe 
+async handle (req: request, res:Response){  (manipulador, recebe objeto e desconstroi)
+const {nome, email, senha} = req.body (descontroi)
+
+ 
